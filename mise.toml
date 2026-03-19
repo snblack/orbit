@@ -2,6 +2,7 @@
 direnv = "latest"
 fzf = "latest"
 gh = "latest"
+"github:pimalaya/himalaya" = "latest"
 gitleaks = "latest"
 jq = "latest"
 kubectl = "latest"
