@@ -65,7 +65,8 @@ pr-review-fix-loop@dapi \
 pr-review-toolkit@claude-plugins-official \
 ralph-loop@claude-plugins-official \
 superpowers@claude-plugins-official \
-zellij-claude-status@dapi}"
+zellij-workflow@dapi}"
+
 
 EXPECTED_MARKETPLACES="${EXPECTED_MARKETPLACES:-\
 claude-plugins-official \
