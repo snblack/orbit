@@ -8,12 +8,13 @@ Orbit — веб-приложение для создания дружеских
 
 | Слой | Технология |
 |---|---|
-| Backend | Ruby on Rails 7.2+ (монолит) |
+| Backend | Ruby on Rails 8.1.3 (монолит) |
 | Frontend | Hotwire: Turbo + Stimulus |
 | CSS | Tailwind CSS |
 | База данных | PostgreSQL + pgvector (для AI-embeddings) |
-| Realtime | ActionCable (чат внутри Pod) |
+| Realtime | ActionCable + Solid Cable (без Redis) |
 | Background jobs | Sidekiq + Redis |
+| Cache | Solid Cache (PostgreSQL-backed, без Redis) |
 | Аутентификация | Devise |
 | Платежи | Stripe + Pay gem |
 | Email | ActionMailer + Resend |
