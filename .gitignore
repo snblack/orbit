@@ -4,3 +4,7 @@
 /config/*.key
 
 .ruby-version
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
+tmp

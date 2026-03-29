@@ -6,10 +6,10 @@
 
 ## 1.1 Проект и инфраструктура
 
-- [ ] Создать Rails-приложение (`rails new orbit --database=postgresql`)
-- [ ] Установить и настроить Tailwind CSS (`tailwindcss-rails`)
-- [ ] Установить Hotwire (`hotwire-rails` или встроен в Rails 7)
-- [ ] Настроить Devise (регистрация, логин, подтверждение email)
+- [x] Создать Rails-приложение (`rails new orbit --database=postgresql`)
+- [x] Установить и настроить Tailwind CSS (`tailwindcss-rails`)
+- [x] Установить Hotwire (`hotwire-rails` или встроен в Rails 7)
+- [x] Настроить Devise (регистрация, логин, подтверждение email)
 - [ ] Подключить Sidekiq + Redis (`config/sidekiq.yml`, `Procfile.dev`)
 - [ ] Настроить pgvector расширение в PostgreSQL (`CREATE EXTENSION vector`)
 - [ ] Установить `neighbor` gem для vector search
