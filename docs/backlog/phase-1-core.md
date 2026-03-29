@@ -10,11 +10,11 @@
 - [x] Установить и настроить Tailwind CSS (`tailwindcss-rails`)
 - [x] Установить Hotwire (`hotwire-rails` или встроен в Rails 7)
 - [x] Настроить Devise (регистрация, логин, подтверждение email)
-- [ ] Подключить Sidekiq + Redis (`config/sidekiq.yml`, `Procfile.dev`)
-- [ ] Настроить pgvector расширение в PostgreSQL (`CREATE EXTENSION vector`)
-- [ ] Установить `neighbor` gem для vector search
-- [ ] Настроить ActiveStorage + Cloudflare R2 (для фото профиля)
-- [ ] Базовый layout с Tailwind: навигация, мобильный responsive
+- [x] Подключить фоновые задачи (Solid Queue, встроен в Rails 8 — Redis не нужен)
+- [ ] Настроить pgvector расширение в PostgreSQL (`CREATE EXTENSION vector`) ⏳ отложено до фазы AI-матчинга
+- [ ] Установить `neighbor` gem для vector search ⏳ отложено до фазы AI-матчинга
+- [ ] Настроить ActiveStorage + Cloudflare R2 (для фото профиля) ⏳ отложено до фазы профиля
+- [x] Базовый layout с Tailwind: навигация, мобильный responsive
 
 ---
 

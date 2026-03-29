@@ -1,0 +1,15 @@
+<div class="text-center py-20">
+  <h1 class="text-4xl font-bold text-gray-900 mb-4">Добро пожаловать в Orbit</h1>
+  <p class="text-lg text-gray-600 mb-8">Найди своих людей рядом</p>
+
+  <% if user_signed_in? %>
+    <p class="text-gray-600">Привет, <%= current_user.email %>!</p>
+  <% else %>
+    <div class="flex justify-center gap-4">
+      <%= link_to "Начать", new_user_registration_path,
+          class: "bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-medium" %>
+      <%= link_to "Войти", new_user_session_path,
+          class: "border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 font-medium" %>
+    </div>
+  <% end %>
+</div>
