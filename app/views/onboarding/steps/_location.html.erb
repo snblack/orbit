@@ -1,38 +1,33 @@
+<% district_value = user.location_district.presence || ip_location&.dig(:city)
+   lat_value     = user.latitude  || ip_location&.dig(:lat)
+   lng_value     = user.longitude || ip_location&.dig(:lon) %>
+
 <%= form_with scope: :user, url: onboarding_step_path(step: "location"), method: :patch,
-    data: { turbo_frame: "onboarding_step", controller: "geolocation" } do |f| %>
+    data: { turbo_frame: "onboarding_step" } do |f| %>
   <h2 class="text-2xl font-bold text-gray-900 mb-2">Где вы живёте?</h2>
   <p class="text-gray-500 mb-6">Нужно для поиска людей рядом</p>
 
-  <%# Автоопределение %>
-  <div class="mb-6 p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
-    <div class="flex items-center justify-between">
+  <% if ip_location %>
+    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3">
+      <span class="text-green-600 text-xl">📍</span>
       <div>
-        <p class="font-medium text-indigo-800">Определить автоматически</p>
-        <p class="text-sm text-indigo-600">Браузер запросит разрешение</p>
+        <p class="font-medium text-green-800">Определили по вашему IP: <strong><%= ip_location[:city] %></strong></p>
+        <p class="text-sm text-green-600">Поправьте, если нужно</p>
       </div>
-      <button type="button"
-              data-action="geolocation#detect"
-              class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors">
-        Определить
-      </button>
     </div>
-    <p class="mt-2 text-sm text-indigo-700 hidden" data-geolocation-target="status"></p>
-  </div>
+  <% end %>
 
-  <div class="text-center text-gray-400 text-sm mb-6">— или укажите вручную —</div>
-
-  <%# Ручной ввод %>
   <div class="space-y-4">
     <div>
       <%= f.label :location_district, "Район / Город", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= f.text_field :location_district,
           placeholder: "Например: Арбат, Москва",
-          value: user.location_district,
+          value: district_value,
           class: "w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
     </div>
 
-    <%= f.hidden_field :latitude,  value: user.latitude,  data: { geolocation_target: "lat" } %>
-    <%= f.hidden_field :longitude, value: user.longitude, data: { geolocation_target: "lng" } %>
+    <%= f.hidden_field :latitude,  value: lat_value %>
+    <%= f.hidden_field :longitude, value: lng_value %>
   </div>
 
   <div class="mt-8 flex justify-between">

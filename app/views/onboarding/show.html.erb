@@ -12,6 +12,6 @@
       </div>
     <% end %>
 
-    <%= render "onboarding/steps/#{@step}", user: current_user %>
+    <%= render "onboarding/steps/#{@step}", user: current_user, ip_location: @ip_location %>
   <% end %>
 </div>

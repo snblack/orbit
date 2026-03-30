@@ -1,3 +1,6 @@
+require "net/http"
+require "json"
+
 class OnboardingController < ApplicationController
   before_action :authenticate_user!
   before_action :set_step
@@ -5,6 +8,7 @@ class OnboardingController < ApplicationController
   STEPS = %w[life_phase values rhythm interests location media].freeze
 
   def show
+    @ip_location = detect_ip_location if @step == "location"
   end
 
   def update
@@ -31,6 +35,24 @@ class OnboardingController < ApplicationController
     redirect_to onboarding_step_path(step: STEPS.first) unless STEPS.include?(@step)
     @step_index = STEPS.index(@step)
     @total_steps = STEPS.size
+  end
+
+  def detect_ip_location
+    ip = request.remote_ip
+    ip = nil if ip == "127.0.0.1" || ip == "::1" # localhost — не отправляем в API
+
+    return nil if ip.nil?
+
+    uri = URI("http://ip-api.com/json/#{ip}?fields=city,lat,lon,status&lang=ru")
+    response = Net::HTTP.get_response(uri)
+    return nil unless response.is_a?(Net::HTTPSuccess)
+
+    data = JSON.parse(response.body)
+    return nil unless data["status"] == "success"
+
+    { city: data["city"], lat: data["lat"], lon: data["lon"] }
+  rescue StandardError
+    nil
   end
 
   def step_params
