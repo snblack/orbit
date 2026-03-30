@@ -1,0 +1,33 @@
+<%= form_with scope: :user, url: onboarding_step_path(step: "life_phase"), method: :patch, data: { turbo_frame: "onboarding_step" } do |f| %>
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">Что сейчас происходит в вашей жизни?</h2>
+  <p class="text-gray-500 mb-6">Выберите фазу, которая лучше всего описывает ваш текущий момент</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <% [
+      { value: "recently_moved",  icon: "🏠", label: "Недавно переехал",  desc: "Новый город или район" },
+      { value: "career_change",   icon: "💼", label: "Смена карьеры",     desc: "Новая работа или сфера" },
+      { value: "new_parent",      icon: "👶", label: "Молодой родитель",  desc: "Ребёнок до 3 лет" },
+      { value: "remote_worker",   icon: "💻", label: "Удалённая работа",  desc: "Работаю из дома" },
+      { value: "student",         icon: "🎓", label: "Студент",           desc: "Учусь или прохожу курсы" },
+      { value: "retired",         icon: "🌅", label: "На пенсии",         desc: "Много свободного времени" },
+      { value: "other",           icon: "✨", label: "Другое",            desc: "Мой момент особенный" },
+    ].each do |opt| %>
+      <label class="relative flex items-start gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all
+                    border-gray-200 bg-white hover:border-indigo-300
+                    has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50">
+        <%= f.radio_button :life_phase, opt[:value],
+            checked: user.life_phase == opt[:value],
+            class: "sr-only" %>
+        <span class="text-2xl"><%= opt[:icon] %></span>
+        <span>
+          <span class="block font-medium text-gray-900"><%= opt[:label] %></span>
+          <span class="block text-sm text-gray-500"><%= opt[:desc] %></span>
+        </span>
+      </label>
+    <% end %>
+  </div>
+
+  <div class="mt-8 flex justify-end">
+    <%= f.submit "Далее →", class: "bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors" %>
+  </div>
+<% end %>

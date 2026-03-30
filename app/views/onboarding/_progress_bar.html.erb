@@ -1,0 +1,14 @@
+<%
+  step_labels = %w[Фаза\ жизни Ценности Ритм Интересы Геолокация Знакомство]
+  progress_pct = ((step_index + 1).to_f / total_steps * 100).round
+%>
+<div class="mb-8">
+  <div class="flex justify-between items-center mb-2">
+    <span class="text-sm text-gray-500">Шаг <%= step_index + 1 %> из <%= total_steps %></span>
+    <span class="text-sm font-medium text-indigo-600"><%= step_labels[step_index] %></span>
+  </div>
+  <div class="w-full bg-gray-200 rounded-full h-2">
+    <div class="bg-indigo-600 h-2 rounded-full transition-all duration-500"
+         style="width: <%= progress_pct %>%"></div>
+  </div>
+</div>

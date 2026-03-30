@@ -1,0 +1,44 @@
+<%= form_with scope: :user, url: onboarding_step_path(step: "interests"), method: :patch, data: { turbo_frame: "onboarding_step" } do |f| %>
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">Что вам интересно?</h2>
+  <p class="text-gray-500 mb-6">Выберите всё, что откликается (можно несколько)</p>
+
+  <% interests_list = [
+    { value: "hiking",       icon: "🏔️", label: "Природа и хайкинг" },
+    { value: "coffee",       icon: "☕",  label: "Кофейни и посиделки" },
+    { value: "books",        icon: "📚",  label: "Книги и чтение" },
+    { value: "tech",         icon: "💻",  label: "Технологии" },
+    { value: "music",        icon: "🎵",  label: "Музыка" },
+    { value: "fitness",      icon: "🏃",  label: "Фитнес и спорт" },
+    { value: "cooking",      icon: "🍳",  label: "Готовка и еда" },
+    { value: "art",          icon: "🎨",  label: "Искусство и культура" },
+    { value: "travel",       icon: "✈️",  label: "Путешествия" },
+    { value: "gaming",       icon: "🎮",  label: "Игры" },
+    { value: "movies",       icon: "🎬",  label: "Кино и сериалы" },
+    { value: "meditation",   icon: "🧘",  label: "Медитация и осознанность" },
+    { value: "volunteering", icon: "🤲",  label: "Волонтёрство" },
+    { value: "startups",     icon: "🚀",  label: "Стартапы и бизнес" },
+    { value: "languages",    icon: "🌍",  label: "Языки" },
+    { value: "photography",  icon: "📷",  label: "Фотография" },
+  ] %>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
+    <% interests_list.each do |interest| %>
+      <% selected = (user.interests || []).include?(interest[:value]) %>
+      <label class="flex items-center gap-2 px-3 py-2.5 border-2 rounded-xl cursor-pointer transition-all text-sm
+                    border-gray-200 bg-white text-gray-700 hover:border-indigo-300
+                    has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-700">
+        <input type="checkbox" name="user[interests][]" value="<%= interest[:value] %>"
+               <%= "checked" if selected %> class="sr-only">
+        <span><%= interest[:icon] %></span>
+        <span class="font-medium"><%= interest[:label] %></span>
+      </label>
+    <% end %>
+  </div>
+
+  <div class="mt-8 flex justify-between">
+    <%= link_to "← Назад", onboarding_step_path(step: "rhythm"),
+        class: "text-gray-500 hover:text-gray-700 px-4 py-3 rounded-xl font-medium",
+        data: { turbo_frame: "onboarding_step" } %>
+    <%= f.submit "Далее →", class: "bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors" %>
+  </div>
+<% end %>

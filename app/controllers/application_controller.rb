@@ -4,4 +4,16 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  def after_sign_up_path_for(resource)
+    onboarding_step_path(step: "life_phase")
+  end
+
+  def after_sign_in_path_for(resource)
+    if resource.onboarding_completed?
+      root_path
+    else
+      onboarding_step_path(step: "life_phase")
+    end
+  end
 end

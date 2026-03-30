@@ -1,0 +1,17 @@
+<% content_for :title, "Онбординг — Orbit" %>
+
+<div class="max-w-xl mx-auto py-8">
+  <%= turbo_frame_tag "onboarding_step", data: { turbo_action: "advance" } do %>
+    <%= render "progress_bar", step_index: @step_index, total_steps: @total_steps %>
+
+    <% if current_user.errors.any? %>
+      <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+        <% current_user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= render "onboarding/steps/#{@step}", user: current_user %>
+  <% end %>
+</div>

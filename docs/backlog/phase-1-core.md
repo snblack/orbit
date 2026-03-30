@@ -22,7 +22,7 @@
 
 **Цель:** пользователь проходит структурированный квиз и данные сохраняются в профиль.
 
-- [ ] Модель `User` расширить полями профиля:
+- [x] Модель `User` расширить полями профиля:
   - `life_phase` (enum: recently_moved, career_change, new_parent, remote_worker, etc.)
   - `social_style` (enum: introvert, ambivert, extrovert)
   - `friendship_goal` (enum: support, growth, fun, intellectual)
@@ -33,15 +33,15 @@
   - `location_district` (string)
   - `latitude`, `longitude` (float)
   - `onboarding_completed` (boolean)
-- [ ] Multi-step форма онбординга (5–6 шагов) с Turbo Frames
-- [ ] Шаг 1: Жизненная фаза (radio cards)
-- [ ] Шаг 2: Ценности и мироощущение (radio + checkboxes)
-- [ ] Шаг 3: Ритм жизни (расписание, частота встреч)
-- [ ] Шаг 4: Интересы (checkbox grid + открытое поле)
-- [ ] Шаг 5: Геолокация (автоопределение браузером или ручной ввод района)
-- [ ] Шаг 6: Фото + короткое видео-представление (15 сек, опционально)
-- [ ] Progress bar через весь квиз
-- [ ] Валидации на каждом шаге, сохранение через `PATCH /users/:id`
+- [x] Multi-step форма онбординга (5–6 шагов) с Turbo Frames
+- [x] Шаг 1: Жизненная фаза (radio cards)
+- [x] Шаг 2: Ценности и мироощущение (radio + checkboxes)
+- [x] Шаг 3: Ритм жизни (расписание, частота встреч)
+- [x] Шаг 4: Интересы (checkbox grid + открытое поле)
+- [x] Шаг 5: Геолокация (автоопределение браузером или ручной ввод района)
+- [x] Шаг 6: Фото + короткое видео-представление (15 сек, опционально) ⏳ загрузка отложена до ActiveStorage
+- [x] Progress bar через весь квиз
+- [x] Валидации на каждом шаге, сохранение через `PATCH /onboarding/:step`
 
 ---
 
