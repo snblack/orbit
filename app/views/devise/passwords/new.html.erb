@@ -1,0 +1,26 @@
+<div class="max-w-md mx-auto mt-12 px-4">
+  <div class="bg-white rounded-2xl shadow-md p-8">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Восстановление пароля</h1>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <% if resource.errors.any? %>
+        <div class="bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm mb-4">
+          <ul><% resource.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul>
+        </div>
+      <% end %>
+
+      <div class="mb-6">
+        <%= f.label :email, "Email", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+            placeholder: "your@email.com",
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+
+      <%= f.submit "Отправить инструкции", class: "w-full bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors cursor-pointer" %>
+    <% end %>
+
+    <div class="mt-4 text-center">
+      <%= link_to "Вернуться к входу", new_user_session_path, class: "text-sm text-indigo-600 hover:underline" %>
+    </div>
+  </div>
+</div>
