@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_30_115729) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_04_174358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "notifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "message", null: false
+    t.bigint "pod_id", null: false
+    t.boolean "read", default: false, null: false
+    t.bigint "user_id", null: false
+    t.index ["pod_id"], name: "index_notifications_on_pod_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "pod_memberships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "pod_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["pod_id", "user_id"], name: "index_pod_memberships_on_pod_id_and_user_id", unique: true
+    t.index ["pod_id"], name: "index_pod_memberships_on_pod_id"
+    t.index ["user_id"], name: "index_pod_memberships_on_user_id"
+  end
+
+  create_table "pods", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "status", default: "inactive", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "confirmation_sent_at"
@@ -41,4 +66,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_30_115729) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "notifications", "pods"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "pod_memberships", "pods"
+  add_foreign_key "pod_memberships", "users"
 end

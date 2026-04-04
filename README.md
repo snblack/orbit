@@ -1,24 +1,31 @@
-# README
+# Orbit
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Запуск локально
 
-Things you may want to cover:
+**Требования:** Ruby 3.4.8, PostgreSQL
 
-* Ruby version
+```bash
+bundle install
+rails db:create db:migrate db:seed
+rails server
+```
 
-* System dependencies
+Приложение доступно на `http://localhost:3000`.
 
-* Configuration
+## Матчинг
 
-* Database creation
+```bash
+rails matching:run
+```
 
-* Database initialization
+Алгоритм группирует пользователей из пула (onboarding завершён, координаты указаны, ещё не в поде) в Pod-ы по 5 человек с учётом геолокации и совместимости.
 
-* How to run the test suite
+## Тесты
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+# Minitest
+rails test
 
-* Deployment instructions
-
-* ...
+# RSpec
+bundle exec rspec
+```

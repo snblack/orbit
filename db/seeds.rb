@@ -1,9 +1,27 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Seed data for testing rails matching:run
+# Idempotent: cleans matching data and seed users before recreating them
+
+Notification.delete_all
+PodMembership.delete_all
+Pod.delete_all
+User.where("email LIKE 'seed\\_%'").delete_all
+
+20.times do |i|
+  User.create!(
+    email: "seed_#{i + 1}@example.com",
+    password: "password",
+    confirmed_at: Time.current,
+    onboarding_completed: true,
+    latitude:  53.9 + rand(-0.05..0.05),
+    longitude: 27.5 + rand(-0.05..0.05),
+    life_phase:          %i[student career_change remote_worker].sample,
+    social_style:        %i[introvert ambivert extrovert].sample,
+    friendship_goal:     %i[growth support fun intellectual].sample,
+    openness_level:      %i[surface moderate deep].sample,
+    social_frequency:    %i[once_week two_three_week daily].sample,
+    schedule_preference: [{ "mon" => true }, { "wed" => true }, { "fri" => true }, {}].sample
+  )
+end
+
+puts "Created #{User.where("email LIKE 'seed\\_%'").count} seed users"
+puts "Run 'rails matching:run' to test the matching algorithm"

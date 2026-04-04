@@ -4,6 +4,19 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :pod_memberships, dependent: :destroy
+  has_many :pods, through: :pod_memberships
+  has_many :notifications, dependent: :destroy
+
+  scope :matching_pool, -> {
+    left_joins(:pod_memberships)
+      .where(pod_memberships: { id: nil })
+      .where(onboarding_completed: true)
+      .where.not(latitude: nil)
+      .where.not(longitude: nil)
+      .order(:id)
+  }
+
   enum :life_phase, {
     recently_moved: 0,
     career_change: 1,
