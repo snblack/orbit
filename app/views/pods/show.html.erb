@@ -1,0 +1,68 @@
+<% content_for :title, "Мой Pod — Orbit" %>
+
+<div class="max-w-2xl mx-auto py-6 space-y-6">
+
+  <%# Участники %>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Участники</h2>
+    <div class="flex gap-4 flex-wrap">
+      <% @members.each do |member| %>
+        <%= link_to pod_member_path(@pod, member), class: "flex flex-col items-center gap-2 group" do %>
+          <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-lg"
+               style="background-color: <%= avatar_color_for(member) %>">
+            <%= initials_for(member) %>
+          </div>
+          <span class="text-xs text-gray-600 group-hover:text-indigo-600 text-center max-w-[80px] truncate">
+            <%= member.display_name.presence || member.email.split("@").first %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @pod.active? %>
+
+    <%# Номер недели %>
+    <div class="bg-indigo-50 rounded-2xl border border-indigo-100 p-6">
+      <p class="text-sm text-indigo-500 font-medium uppercase tracking-wide">Вы вместе</p>
+      <p class="text-3xl font-bold text-indigo-700 mt-1">Неделя <%= @week_number %></p>
+    </div>
+
+    <%# Последняя встреча — всегда в DOM %>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Последняя встреча</h2>
+      <% if @last_activity %>
+        <p class="text-gray-900 font-medium"><%= I18n.l(@last_activity.occurred_on, format: :long) %></p>
+      <% else %>
+        <p class="text-gray-400 italic">Ещё не встречались</p>
+      <% end %>
+    </div>
+
+    <%# Ближайшая встреча — только если есть %>
+    <% if @next_activity.present? %>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Ближайшая встреча</h2>
+        <p class="text-gray-900 font-medium"><%= I18n.l(@next_activity.occurred_on, format: :long) %></p>
+      </div>
+    <% end %>
+
+    <%# Предложить активность — Turbo Frame + кнопка %>
+    <div>
+      <%= turbo_frame_tag "new_activity_form" do %><% end %>
+      <%= link_to "Предложить встречу",
+            new_pod_activity_path(@pod),
+            data: { turbo_frame: "new_activity_form" },
+            class: "inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition-colors" %>
+    </div>
+
+  <% else %>
+
+    <%# Неактивный Pod %>
+    <div class="bg-yellow-50 rounded-2xl border border-yellow-200 p-6 text-center">
+      <p class="text-yellow-800 font-medium">Группа ещё формируется</p>
+      <p class="text-yellow-600 text-sm mt-1">Мы подбираем участников — скоро появятся обновления</p>
+    </div>
+
+  <% end %>
+
+</div>

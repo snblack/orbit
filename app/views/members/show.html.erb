@@ -1,0 +1,55 @@
+<% content_for :title, "#{@member.display_name.presence || 'Участник'} — Orbit" %>
+
+<div class="max-w-lg mx-auto py-6">
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
+
+    <%# Аватар и имя %>
+    <div class="flex items-center gap-4">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-semibold text-xl flex-shrink-0"
+           style="background-color: <%= avatar_color_for(@member) %>">
+        <%= initials_for(@member) %>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">
+          <%= @member.display_name.presence || @member.email.split("@").first %>
+        </h1>
+        <% if @member.bio.present? %>
+          <p class="text-gray-600 text-sm mt-1"><%= @member.bio %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Жизненная фаза %>
+    <% if @member.life_phase.present? %>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Жизненная фаза</p>
+        <p class="text-gray-800"><%= t("onboarding.life_phase.#{@member.life_phase}") %></p>
+      </div>
+    <% end %>
+
+    <%# Цель дружбы %>
+    <% if @member.friendship_goal.present? %>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Цель общения</p>
+        <p class="text-gray-800"><%= t("onboarding.friendship_goal.#{@member.friendship_goal}") %></p>
+      </div>
+    <% end %>
+
+    <%# Интересы %>
+    <% if @member.interests.present? %>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">Интересы</p>
+        <div class="flex flex-wrap gap-2">
+          <% @member.interests.each do |interest| %>
+            <span class="bg-indigo-50 text-indigo-700 text-sm px-3 py-1 rounded-full">
+              <%= t("onboarding.interests.#{interest}") %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <%= link_to "← Назад к Pod", pod_path(@pod), class: "mt-4 inline-block text-sm text-indigo-600 hover:text-indigo-800" %>
+</div>

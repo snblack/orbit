@@ -1,0 +1,56 @@
+ru:
+  date:
+    formats:
+      long: "%-d %B %Y"
+    month_names:
+      - ~
+      - января
+      - февраля
+      - марта
+      - апреля
+      - мая
+      - июня
+      - июля
+      - августа
+      - сентября
+      - октября
+      - ноября
+      - декабря
+  activerecord:
+    errors:
+      models:
+        activity:
+          attributes:
+            occurred_on:
+              past_date: "должна быть сегодня или позже"
+  onboarding:
+    life_phase:
+      recently_moved: "Недавно переехал(а)"
+      career_change: "Смена карьеры"
+      new_parent: "Молодой родитель"
+      remote_worker: "Удалённая работа"
+      student: "Студент"
+      retired: "На пенсии"
+      other: "Другое"
+    friendship_goal:
+      support: "Поддержка"
+      growth: "Рост"
+      fun: "Развлечения"
+      intellectual: "Интеллектуальное общение"
+    interests:
+      hiking: "Природа и хайкинг"
+      coffee: "Кофейни и посиделки"
+      books: "Книги и чтение"
+      tech: "Технологии"
+      music: "Музыка"
+      fitness: "Фитнес и спорт"
+      cooking: "Готовка и еда"
+      art: "Искусство и культура"
+      travel: "Путешествия"
+      gaming: "Игры"
+      movies: "Кино и сериалы"
+      meditation: "Медитация и осознанность"
+      volunteering: "Волонтёрство"
+      startups: "Стартапы и бизнес"
+      languages: "Языки"
+      photography: "Фотография"

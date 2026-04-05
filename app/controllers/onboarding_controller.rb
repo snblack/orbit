@@ -5,7 +5,7 @@ class OnboardingController < ApplicationController
   before_action :authenticate_user!
   before_action :set_step
 
-  STEPS = %w[life_phase values rhythm interests location media].freeze
+  STEPS = %w[life_phase values rhythm interests location media profile].freeze
 
   def show
     @ip_location = detect_ip_location if @step == "location"
@@ -69,6 +69,8 @@ class OnboardingController < ApplicationController
       params.require(:user).permit(:location_district, :latitude, :longitude)
     when "media"
       {} # ActiveStorage — отложено до фазы профиля
+    when "profile"
+      params.require(:user).permit(:display_name, :bio)
     else
       {}
     end

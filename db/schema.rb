@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_174358) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_05_100002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "occurred_on", null: false
+    t.bigint "pod_id", null: false
+    t.bigint "proposed_by_id", null: false
+    t.string "status", default: "planned", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pod_id"], name: "index_activities_on_pod_id"
+    t.index ["proposed_by_id"], name: "index_activities_on_proposed_by_id"
+  end
 
   create_table "notifications", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -40,10 +51,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_174358) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "bio"
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "created_at", null: false
+    t.string "display_name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.integer "friendship_goal"
@@ -67,6 +80,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_174358) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activities", "pods"
+  add_foreign_key "activities", "users", column: "proposed_by_id"
   add_foreign_key "notifications", "pods"
   add_foreign_key "notifications", "users"
   add_foreign_key "pod_memberships", "pods"

@@ -52,6 +52,9 @@ class User < ApplicationRecord
     deep: 2
   }
 
+  validates :bio, length: { maximum: 300 }, allow_blank: true
+  validates :display_name, presence: true, on: :onboarding_profile
+
   # Onboarding step validations (activated via context)
   validates :life_phase,      presence: true, on: :onboarding_life_phase
   validates :social_style,    presence: true, on: :onboarding_values
