@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_05_100002) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_06_095304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,6 +23,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_100002) do
     t.datetime "updated_at", null: false
     t.index ["pod_id"], name: "index_activities_on_pod_id"
     t.index ["proposed_by_id"], name: "index_activities_on_proposed_by_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.bigint "pod_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["pod_id", "created_at"], name: "index_messages_on_pod_id_and_created_at"
+    t.index ["pod_id"], name: "index_messages_on_pod_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -82,6 +93,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_100002) do
 
   add_foreign_key "activities", "pods"
   add_foreign_key "activities", "users", column: "proposed_by_id"
+  add_foreign_key "messages", "pods"
+  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "pods"
   add_foreign_key "notifications", "users"
   add_foreign_key "pod_memberships", "pods"

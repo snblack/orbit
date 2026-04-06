@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "chat_history_#{@pod.id}" do %>
+  <div id="chat-history-messages" data-chat-target="history">
+
+    <% if @messages.count == 50 %>
+      <%# Триггер infinite scroll %>
+      <div data-chat-target="scrollTrigger" class="py-1"></div>
+      <div data-chat-target="paginationSpinner" class="hidden flex justify-center py-2">
+        <svg class="animate-spin h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </div>
+    <% end %>
+
+    <% if @messages.empty? %>
+      <p class="text-center text-sm text-gray-400 py-8">
+        Пока нет сообщений. Начните общение!
+      </p>
+    <% else %>
+      <% @messages.each do |message| %>
+        <%= render "messages/message", message: message %>
+      <% end %>
+    <% end %>
+
+  </div>
+<% end %>

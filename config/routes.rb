@@ -8,7 +8,9 @@ Rails.application.routes.draw do
 
   resources :pods, only: [:show] do
     resources :activities, only: [:new, :create]
-    resources :members, only: [:show]
+    resources :members,    only: [:show]
+    resources :messages,   only: [:create]
+    resource  :chat,       only: [:show], controller: "pod_chats"
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

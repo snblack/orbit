@@ -1,0 +1,53 @@
+<section class="mt-8" data-controller="chat"
+         data-chat-pod-id-value="<%= pod.id %>"
+         data-chat-active-value="<%= pod.active? %>">
+
+  <h2 class="text-lg font-semibold text-gray-900 mb-4">Чат</h2>
+
+  <%# История сообщений (Turbo Frame) %>
+  <%= turbo_frame_tag "chat_history_#{pod.id}",
+        src: pod_chat_path(pod),
+        loading: :lazy do %>
+    <div data-chat-target="spinner" class="flex justify-center py-4">
+      <svg class="animate-spin h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </div>
+  <% end %>
+
+  <%# Лента сообщений (куда прилетают новые через broadcast) %>
+  <div id="messages-<%= pod.id %>"
+       data-chat-target="messageList"
+       class="flex flex-col gap-0 max-h-96 overflow-y-auto">
+  </div>
+
+  <%# Форма ввода — только для active pod %>
+  <% if pod.active? %>
+    <form data-chat-target="form"
+          data-action="submit->chat#send keydown->chat#handleKeydown"
+          class="mt-4 flex flex-col gap-2">
+      <textarea data-chat-target="input"
+                data-action="input->chat#updateCounter"
+                rows="3"
+                maxlength="1000"
+                placeholder="Написать сообщение…"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400
+                       resize-none"></textarea>
+      <div class="flex items-center justify-between">
+        <span data-chat-target="counter"
+              class="text-xs text-gray-400">0 / 1000</span>
+        <button type="submit"
+                data-chat-target="submit"
+                disabled
+                class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium
+                       disabled:opacity-40 disabled:cursor-not-allowed
+                       hover:bg-indigo-700 transition">
+          Отправить
+        </button>
+      </div>
+    </form>
+  <% end %>
+
+</section>

@@ -1,0 +1,14 @@
+<div id="message-<%= message.id %>"
+     class="flex flex-col gap-1 px-4 py-2">
+  <div class="flex items-baseline gap-2">
+    <span class="font-semibold text-sm text-gray-900"><%= message.user.display_name %></span>
+    <span class="text-xs text-gray-400">
+      <% if message.created_at.today? %>
+        <%= message.created_at.strftime("%H:%M") %>
+      <% else %>
+        <%= message.created_at.strftime("%d.%m.%Y %H:%M") %>
+      <% end %>
+    </span>
+  </div>
+  <p class="text-sm text-gray-700 whitespace-pre-wrap break-words"><%= message.body %></p>
+</div>

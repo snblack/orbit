@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :pod_memberships, dependent: :destroy
   has_many :pods, through: :pod_memberships
   has_many :notifications, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   scope :matching_pool, -> {
     left_joins(:pod_memberships)
